@@ -14,11 +14,13 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import static ru.javawebinar.topjava.UserTestData.*;
+
 @Repository
 public class InMemoryUserRepository extends InMemoryBaseRepository<User> implements UserRepository {
     private final Map<Integer, User> repository = new ConcurrentHashMap<>();
     private final AtomicInteger counter = new AtomicInteger(0);
-    
+
     private static final Logger log = LoggerFactory.getLogger(InMemoryUserRepository.class);
 
     @Override
@@ -45,11 +47,20 @@ public class InMemoryUserRepository extends InMemoryBaseRepository<User> impleme
         return Collections.emptyList();
     }
 
-    @Override
+    /*@Override
     public void init() {
         map.clear();
         map.put(UserTestData.USER_ID, UserTestData.user);
         map.put(UserTestData.ADMIN_ID, UserTestData.admin);
+    }*/
+
+    public void init() {
+        map.clear();
+        map.put(UserTestData.USER_ID, user);
+        map.put(UserTestData.ADMIN_ID, admin);
+        put(user);
+        put(admin);
+        counter.getAndSet(UserTestData.ADMIN_ID + 1);
     }
 
     @Override
