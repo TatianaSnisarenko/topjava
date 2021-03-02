@@ -38,7 +38,6 @@ public class InMemoryMealRepository implements MealRepository {
         return meals.save(meal);
     }
 
-
     @PostConstruct
     public void postConstruct() {
         log.info("+++ PostConstruct");
@@ -55,13 +54,11 @@ public class InMemoryMealRepository implements MealRepository {
         return meals != null && meals.delete(id);
     }
 
-
     @Override
     public Meal get(int id, int userId) {
         InMemoryBaseRepository<Meal> meals = usersMealsMap.get(userId);
         return meals == null ? null : meals.get(id);
     }
-
 
     @Override
     public List<Meal> getBetweenHalfOpen(LocalDateTime startDateTime, LocalDateTime endDateTime, int userId) {
